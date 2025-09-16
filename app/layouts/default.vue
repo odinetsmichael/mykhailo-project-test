@@ -1,6 +1,5 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
-    <div class="container"><Header/></div>
+  <div class="container"><Header /></div>
 </template>

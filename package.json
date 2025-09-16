@@ -7,7 +7,11 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "start": "nuxt start",
+    "lint": "eslint . --ext .js,.ts,.vue && stylelint \"**/*.{vue,scss,css}\"",
+    "lint:fix": "eslint . --ext .js,.ts,.vue --fix && stylelint \"**/*.{vue,scss,css}\" --fix",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "nuxt": "^4.1.2",
@@ -15,7 +19,20 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.44.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.4.0",
+    "postcss-html": "^1.8.0",
+    "postcss-scss": "^4.0.9",
+    "prettier": "^3.6.2",
     "sass": "^1.92.1",
-    "sass-loader": "^16.0.5"
+    "sass-loader": "^16.0.5",
+    "stylelint": "^16.24.0",
+    "stylelint-config-prettier-scss": "^1.0.0",
+    "stylelint-config-standard-scss": "^16.0.0",
+    "stylelint-scss": "^6.12.1",
+    "vue-eslint-parser": "^10.2.0"
   }
 }

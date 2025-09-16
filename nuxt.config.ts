@@ -1,8 +1,5 @@
 export default defineNuxtConfig({
-  css: [
-    '@/assets/scss/base.scss',
-    '@/assets/scss/media.scss'
-  ],
+  css: ['@/assets/scss/base.scss', '@/assets/scss/media.scss'],
   vite: {
     css: {
       preprocessorOptions: {
@@ -10,9 +7,9 @@ export default defineNuxtConfig({
           additionalData: `
             @use "@/assets/scss/variables.scss" as *;
             @use "@/assets/scss/mixins.scss" as *;
-          `
-        }
-      }
-    }
-  }
+          `,
+        },
+      },
+    },
+  },
 })

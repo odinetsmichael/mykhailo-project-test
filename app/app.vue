@@ -1,11 +1,5 @@
-<script setup lang="ts">
-
-
-</script>
+<script setup lang="ts"></script>
 <template>
-  <NuxtLayout>
-
-  </NuxtLayout>
+  <NuxtLayout> </NuxtLayout>
 </template>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

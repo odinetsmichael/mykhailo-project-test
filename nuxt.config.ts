@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   css: [
-    '@/assets/scss/base.scss'
+    '@/assets/scss/base.scss',
+    '@/assets/scss/media.scss'
   ],
   vite: {
     css: {
@@ -8,6 +9,7 @@ export default defineNuxtConfig({
         scss: {
           additionalData: `
             @use "@/assets/scss/variables.scss" as *;
+            @use "@/assets/scss/mixins.scss" as *;
           `
         }
       }

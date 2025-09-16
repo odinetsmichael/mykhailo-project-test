@@ -1,0 +1,12 @@
+@use 'mixins' as *;
+
+.container {
+  @include laptop {
+    max-width: 90% !important;
+  }
+
+  @include tablet {
+    max-width: 95% !important;
+    padding: 0 1.2rem;
+  }
+}

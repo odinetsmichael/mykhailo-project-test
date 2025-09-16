@@ -1,3 +1,10 @@
+<script setup lang="ts">
+
+const layout = 'custom'
+</script>
+
 <template>
-  <h1>Index Page</h1>
+  <NuxtLayout :name="layout">
+    <NuxtPage />
+  </NuxtLayout>
 </template>

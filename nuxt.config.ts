@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  css: ['@/assets/scss/base.scss', '@/assets/scss/media.scss'],
+  css: ['bootstrap/dist/css/bootstrap.min.css', '@/assets/scss/base.scss','@/assets/scss/media.scss'],
   vite: {
     css: {
       preprocessorOptions: {

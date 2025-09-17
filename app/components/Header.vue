@@ -32,7 +32,7 @@
     }
     .logo-text {
       text-transform: uppercase;
-      color: #7cb342;
+      color: $base-green;
       font-weight: bold;
     }
   }

@@ -2,4 +2,5 @@
 
 <template>
   <Header />
+  <LeftMenu />
 </template>

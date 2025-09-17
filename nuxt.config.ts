@@ -1,5 +1,16 @@
 export default defineNuxtConfig({
-  css: ['bootstrap/dist/css/bootstrap.min.css', '@/assets/scss/base.scss','@/assets/scss/media.scss'],
+  css: [
+    'bootstrap/dist/css/bootstrap.min.css',
+    '@/assets/scss/base.scss',
+    '@/assets/scss/media.scss',
+  ],
+  modules: ['@nuxtjs/google-fonts'],
+  googleFonts: {
+    families: {
+      Roboto: [300, 400, 500, 700], // веса на выбор
+    },
+    display: 'swap',
+  },
   vite: {
     css: {
       preprocessorOptions: {

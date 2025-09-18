@@ -14,5 +14,6 @@ const props = defineProps<SubHeader>()
 .sub-header {
   font-size: $fz-title;
   text-transform: capitalize;
+  margin-bottom: $default-margin;
 }
 </style>

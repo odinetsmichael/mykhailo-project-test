@@ -1,14 +1,6 @@
 <script setup lang="ts">
 import { MenuList } from '@/types/enums'
 
-const menuItems = [
-  MenuList.INCOMING,
-  MenuList.GROUPS,
-  MenuList.PRODUCTS,
-  MenuList.USERS,
-  MenuList.SETTINGS,
-]
-
 const emit = defineEmits<{
   (e: 'select', item: MenuList): void
 }>()
@@ -23,7 +15,7 @@ function handleClick(item: MenuList) {
       <img class="avatar-item" src="../assets/img/avatar.webp" alt="logo" />
     </div>
     <ul class="menu-lists">
-      <li v-for="item in menuItems" :key="item" class="menu-list" @click="handleClick(item)">
+      <li v-for="item in MenuList" :key="item" class="menu-list" @click="handleClick(item)">
         {{ item }}
       </li>
     </ul>
@@ -37,9 +29,9 @@ function handleClick(item: MenuList) {
   align-items: center;
   width: 30rem;
   height: 100vh;
-  -webkit-box-shadow: 16px 0px 15px -13px rgba(66, 68, 90, 0.301);
-  -moz-box-shadow: 16px 0px 15px -13px rgba(66, 68, 90, 0.301);
-  box-shadow: 16px 0px 15px -13px rgba(66, 68, 90, 0.301);
+  -webkit-box-shadow: 1.6rem 0 1.5rem -1.3rem rgba(66, 68, 90, 0.301);
+  -moz-box-shadow: 1.6rem 0 1.5rem -1.3rem rgba(66, 68, 90, 0.301);
+  box-shadow: 1.6rem 0 1.5rem -1.3rem rgba(66, 68, 90, 0.301);
   .avatar {
     margin-top: $default-margin;
     .avatar-item {
@@ -74,7 +66,7 @@ function handleClick(item: MenuList) {
         background-color: $base-green;
         transform: scaleX(0);
         transform-origin: center;
-        transition: transform 0.3s ease;
+        transition: transform $default-transition ease;
       }
 
       &:hover::after {

@@ -1,15 +1,31 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { MenuList } from '@/types/enums'
+
+const menuItems = [
+  MenuList.INCOMING,
+  MenuList.GROUPS,
+  MenuList.PRODUCTS,
+  MenuList.USERS,
+  MenuList.SETTINGS,
+]
+
+const emit = defineEmits<{
+  (e: 'select', item: MenuList): void
+}>()
+
+function handleClick(item: MenuList) {
+  emit('select', item)
+}
+</script>
 <template>
   <section class="left-menu">
     <div class="avatar">
       <img class="avatar-item" src="../assets/img/avatar.webp" alt="logo" />
     </div>
     <ul class="menu-lists">
-      <li class="menu-list">приход</li>
-      <li class="menu-list">группы</li>
-      <li class="menu-list">продукты</li>
-      <li class="menu-list">пользователи</li>
-      <li class="menu-list">настройки</li>
+      <li v-for="item in menuItems" :key="item" class="menu-list" @click="handleClick(item)">
+        {{ item }}
+      </li>
     </ul>
   </section>
 </template>
@@ -19,7 +35,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 20rem;
+  width: 30rem;
   height: 100vh;
   -webkit-box-shadow: 16px 0px 15px -13px rgba(66, 68, 90, 0.301);
   -moz-box-shadow: 16px 0px 15px -13px rgba(66, 68, 90, 0.301);

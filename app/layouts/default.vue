@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { MenuList } from '@/types/enums'
 const selectedItem = ref<MenuList>(MenuList.INCOMING)
-
 function onMenuSelect(item: MenuList) {
   selectedItem.value = item
 }

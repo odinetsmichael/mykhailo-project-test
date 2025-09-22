@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { MONTH_NAMES } from '~/types/variables'
+
 interface IncomingList {
   incomingName: string
   numOfProducts: number
   incomingDate: string
-  incomingCost: string
+  incomingCostUah: number
+  incomingCostUsd: number
 }
+
 const props = defineProps<IncomingList>()
 
 const getProductWord = (count: number): string => {
@@ -14,6 +18,21 @@ const getProductWord = (count: number): string => {
   if (mod10 === 1) return 'продукт'
   if (mod10 >= 2 && mod10 <= 4) return 'продукта'
   return 'продуктов'
+}
+
+const formatIncomingDate = (dateStr: string) => {
+  const date = new Date(dateStr)
+  const day = String(date.getDate()).padStart(2, '0')
+  const monthIndex = date.getMonth()
+  const month = MONTH_NAMES[monthIndex]
+  const year = date.getFullYear()
+
+  const topLabel = String(monthIndex + 1).padStart(2, '0')
+
+  return {
+    display: `${day}/${month}/${year}`,
+    topLabel,
+  }
 }
 </script>
 
@@ -36,11 +55,14 @@ const getProductWord = (count: number): string => {
       </div>
     </div>
 
-    <div class="incoming-list__date">{{ incomingDate }}</div>
+    <div class="incoming-list__date">
+      <div class="incoming-list__date-top">{{ formatIncomingDate(incomingDate).topLabel }}/12</div>
+      <div class="incoming-list__date-bottom">{{ formatIncomingDate(incomingDate).display }}</div>
+    </div>
 
     <div class="incoming-list__cost">
-      <span class="incoming-list__cost-usd">2 500 $</span>
-      <span class="incoming-list__cost-uah">{{ incomingCost }} UAH</span>
+      <span class="incoming-list__cost-usd">{{ incomingCostUah }} $</span>
+      <span class="incoming-list__cost-uah">{{ incomingCostUsd }} UAH</span>
     </div>
 
     <div class="incoming-list__delete">
@@ -119,25 +141,33 @@ const getProductWord = (count: number): string => {
 
   .incoming-list__date {
     display: flex;
-    justify-content: center;
-    color: $text-dark-grey;
-    font-size: 1.4rem;
+    flex-direction: column;
+    .incoming-list__date-top {
+      display: flex;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: $text-light-grey;
+    }
+    .incoming-list__date-bottom {
+      display: flex;
+      justify-content: center;
+      color: $text-dark-grey;
+    }
   }
 
   .incoming-list__cost {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
     line-height: 1.2;
 
     .incoming-list__cost-usd {
       font-size: 1.2rem;
-      font-weight: 500;
       color: $text-light-grey;
     }
 
     .incoming-list__cost-uah {
-      font-weight: 600;
       color: $text-dark-grey;
     }
   }

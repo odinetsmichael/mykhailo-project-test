@@ -8,6 +8,13 @@ const emit = defineEmits<{
 function handleClick(item: MenuList) {
   emit('select', item)
 }
+const menuItems = [
+  { label: MenuList.INCOMING, route: '/' },
+  { label: MenuList.GROUPS, route: '/groups' },
+  { label: MenuList.PRODUCTS, route: '/products' },
+  { label: MenuList.USERS, route: '/users' },
+  { label: MenuList.SETTINGS, route: '/settings' },
+]
 </script>
 <template>
   <section class="left-menu">
@@ -15,9 +22,15 @@ function handleClick(item: MenuList) {
       <img class="avatar-item" src="../assets/img/avatar.webp" alt="logo" />
     </div>
     <ul class="menu-lists">
-      <li v-for="item in MenuList" :key="item" class="menu-list" @click="handleClick(item)">
-        {{ item }}
-      </li>
+      <NuxtLink
+        v-for="item in menuItems"
+        :key="item.label"
+        class="menu-list"
+        @click="handleClick(item.label)"
+        :to="item.route"
+      >
+        {{ item.label }}
+      </NuxtLink>
     </ul>
   </section>
 </template>

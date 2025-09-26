@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { MONTH_NAMES } from '~/types/variables'
-
+import { getProductWord, formatIncomingDate } from '~/utils/orders'
 interface IncomingList {
   incomingName: string
   numOfProducts: number
@@ -10,30 +9,6 @@ interface IncomingList {
 }
 
 const props = defineProps<IncomingList>()
-
-const getProductWord = (count: number): string => {
-  const mod10 = count % 10
-  const mod100 = count % 100
-  if (mod100 >= 11 && mod100 <= 14) return 'продуктов'
-  if (mod10 === 1) return 'продукт'
-  if (mod10 >= 2 && mod10 <= 4) return 'продукта'
-  return 'продуктов'
-}
-
-const formatIncomingDate = (dateStr: string) => {
-  const date = new Date(dateStr)
-  const day = String(date.getDate()).padStart(2, '0')
-  const monthIndex = date.getMonth()
-  const month = MONTH_NAMES[monthIndex]
-  const year = date.getFullYear()
-
-  const topLabel = String(monthIndex + 1).padStart(2, '0')
-
-  return {
-    display: `${day}/${month}/${year}`,
-    topLabel,
-  }
-}
 </script>
 
 <template>
@@ -112,7 +87,7 @@ const formatIncomingDate = (dateStr: string) => {
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    color: $text-dark-grey;
+
     .incoming-list__products-menu {
       margin-right: $small-margin;
     }
@@ -126,16 +101,11 @@ const formatIncomingDate = (dateStr: string) => {
     }
 
     .incoming-list__products-number {
-      font-weight: 500;
-      font-size: 1.8rem;
+      @include order-number-style;
     }
 
     .incoming-list__products-label {
-      font-size: 1.2rem;
-      color: $text-light-grey;
-      &::first-letter {
-        text-transform: uppercase;
-      }
+      @include order-label-style;
     }
   }
 
@@ -145,13 +115,12 @@ const formatIncomingDate = (dateStr: string) => {
     .incoming-list__date-top {
       display: flex;
       justify-content: center;
-      font-size: 1.2rem;
-      color: $text-light-grey;
+      @include order-date-top;
     }
     .incoming-list__date-bottom {
       display: flex;
       justify-content: center;
-      color: $text-dark-grey;
+      @include order-date-bottom;
     }
   }
 
@@ -159,9 +128,7 @@ const formatIncomingDate = (dateStr: string) => {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
     line-height: 1.2;
-
     .incoming-list__cost-usd {
       font-size: 1.2rem;
       color: $text-light-grey;

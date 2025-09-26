@@ -1,0 +1,23 @@
+@use 'variables' as *;
+
+@mixin order-number-style {
+  color: $text-dark-grey;
+  font-weight: 500;
+  font-size: 1.8rem;
+}
+@mixin order-label-style {
+  font-size: 1.2rem;
+  color: $text-light-grey;
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+@mixin order-date-top {
+  font-size: 1.2rem;
+  color: $text-light-grey;
+}
+
+@mixin order-date-bottom {
+  color: $text-dark-grey;
+}

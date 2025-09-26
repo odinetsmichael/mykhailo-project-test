@@ -15,7 +15,6 @@
 <style lang="scss" scoped>
 .layout__body {
   display: flex;
-
   .layout__content {
     margin: $medium-margin $big-margin;
     width: 100%;

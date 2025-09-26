@@ -12,15 +12,16 @@ export interface Price {
 export interface Product {
   id: number
   serialNumber: number
-  isNew: number
   photo: string
   title: string
-  type: string
+  type?: string
   specification: string
   guarantee: Guarantee
   price: Price[]
   order: number
   date: string
+  status: boolean // true = новый, false = бу
+  availability: boolean // true = в ремонте, false = свободен
 }
 
 export interface Order {

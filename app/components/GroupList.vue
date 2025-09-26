@@ -1,80 +1,44 @@
 <script setup lang="ts">
-import { MONTH_NAMES } from '~/types/variables'
+import { getProductWord, formatIncomingDate } from '~/utils/orders'
 
 interface GroupList {
-  incomingName: string
   numOfProducts: number
   incomingDate: string
-  incomingCostUah: number
-  incomingCostUsd: number
 }
 
 const props = defineProps<GroupList>()
 
-const getProductWord = (count: number): string => {
-  const mod10 = count % 10
-  const mod100 = count % 100
-  if (mod100 >= 11 && mod100 <= 14) return 'продуктов'
-  if (mod10 === 1) return 'продукт'
-  if (mod10 >= 2 && mod10 <= 4) return 'продукта'
-  return 'продуктов'
-}
+const emit = defineEmits<{
+  (e: 'click'): void
+}>()
 
-const formatIncomingDate = (dateStr: string) => {
-  const date = new Date(dateStr)
-  const day = String(date.getDate()).padStart(2, '0')
-  const monthIndex = date.getMonth()
-  const month = MONTH_NAMES[monthIndex]
-  const year = date.getFullYear()
-
-  const topLabel = String(monthIndex + 1).padStart(2, '0')
-
-  return {
-    display: `${day}/${month}/${year}`,
-    topLabel,
-  }
+const handleClick = () => {
+  emit('click')
 }
 </script>
 
 <template>
-  <div class="incoming-list">
-    <div class="incoming-list__name">
-      <span class="incoming-list__name-text">{{ incomingName }}</span>
+  <div class="group-list" @click="handleClick">
+    <div class="group-list__menu">
+      <ButtonsMenu />
     </div>
 
-    <div class="incoming-list__products">
-      <div class="incoming-list__products-menu">
-        <ButtonsMenu />
-      </div>
-
-      <div class="incoming-list__products-count">
-        <span class="incoming-list__products-number">{{ numOfProducts }}</span>
-        <span class="incoming-list__products-label">
-          {{ getProductWord(numOfProducts) }}
-        </span>
-      </div>
+    <div class="group-list__count">
+      <span class="group-list__number">{{ numOfProducts }}</span>
+      <span class="group-list__label">{{ getProductWord(numOfProducts) }}</span>
     </div>
 
-    <div class="incoming-list__date">
-      <div class="incoming-list__date-top">{{ formatIncomingDate(incomingDate).topLabel }}/12</div>
-      <div class="incoming-list__date-bottom">{{ formatIncomingDate(incomingDate).display }}</div>
-    </div>
-
-    <div class="incoming-list__cost">
-      <span class="incoming-list__cost-usd">{{ incomingCostUah }} $</span>
-      <span class="incoming-list__cost-uah">{{ incomingCostUsd }} UAH</span>
-    </div>
-
-    <div class="incoming-list__delete">
-      <ButtonsTrash />
+    <div class="group-list__date">
+      <div class="group-list__date-top">{{ formatIncomingDate(incomingDate).topLabel }}/12</div>
+      <div class="group-list__date-bottom">{{ formatIncomingDate(incomingDate).display }}</div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.incoming-list {
+.group-list {
   display: grid;
-  grid-template-columns: 4.5fr 1.5fr 1.65fr 2.2fr 0.15fr;
+  grid-template-columns: 2fr 3fr 5fr;
   align-items: center;
   width: 100%;
   height: 7rem;
@@ -84,8 +48,31 @@ const formatIncomingDate = (dateStr: string) => {
   padding: 1rem 2rem;
 
   &:hover {
+    position: relative;
     box-shadow: 0 0.1rem 2.5rem -0.5rem rgba(0, 0, 0, 0.2);
     cursor: pointer;
+    transition: $default-transition;
+    &:after {
+      width: 15%;
+      height: 100%;
+      background-color: $border-grey;
+      content: '';
+      position: absolute;
+      right: 0;
+      transition: $default-transition;
+    }
+    &:before {
+      z-index: 5;
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 7.5%;
+      transform: translate(50%, -50%) rotate(-45deg);
+      width: 1.2rem;
+      height: 1.2rem;
+      border-right: 0.4rem solid white;
+      border-bottom: 0.4rem solid white;
+    }
   }
 
   & > div {
@@ -93,89 +80,40 @@ const formatIncomingDate = (dateStr: string) => {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  .incoming-list__name {
-    margin-right: $default-margin;
-
-    .incoming-list__name-text {
-      font-weight: 500;
-      color: $text-dark-grey;
-      border-bottom: 0.2rem solid $border-grey;
-    }
-
-    &::first-letter {
-      text-transform: uppercase;
-    }
-  }
-
-  .incoming-list__products {
+  .group-list__menu {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    color: $text-dark-grey;
-    .incoming-list__products-menu {
-      margin-right: $small-margin;
-    }
-
-    .incoming-list__products-count {
-      display: flex;
-      width: 100%;
-      flex-direction: column;
-      align-items: flex-start;
-      line-height: 1.2;
-    }
-
-    .incoming-list__products-number {
-      font-weight: 500;
-      font-size: 1.8rem;
-    }
-
-    .incoming-list__products-label {
-      font-size: 1.2rem;
-      color: $text-light-grey;
-      &::first-letter {
-        text-transform: uppercase;
-      }
-    }
+    justify-content: center;
+    margin-right: $small-margin;
   }
 
-  .incoming-list__date {
-    display: flex;
-    flex-direction: column;
-    .incoming-list__date-top {
-      display: flex;
-      justify-content: center;
-      font-size: 1.2rem;
-      color: $text-light-grey;
-    }
-    .incoming-list__date-bottom {
-      display: flex;
-      justify-content: center;
-      color: $text-dark-grey;
-    }
-  }
-
-  .incoming-list__cost {
+  .group-list__count {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
     line-height: 1.2;
 
-    .incoming-list__cost-usd {
-      font-size: 1.2rem;
-      color: $text-light-grey;
+    .group-list__number {
+      @include order-number-style;
     }
-
-    .incoming-list__cost-uah {
-      color: $text-dark-grey;
+    .group-list__label {
+      @include order-label-style;
     }
   }
 
-  .incoming-list__delete {
-    text-align: center;
-    cursor: pointer;
-    color: $text-dark-grey;
+  .group-list__date {
+    display: flex;
+    flex-direction: column;
+    .group-list__date-top {
+      display: flex;
+      justify-content: left;
+      @include order-date-top;
+    }
+    .group-list__date-bottom {
+      display: flex;
+      justify-content: left;
+      @include order-date-bottom;
+    }
   }
 }
 </style>

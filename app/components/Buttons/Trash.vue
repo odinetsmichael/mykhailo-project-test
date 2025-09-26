@@ -7,7 +7,7 @@ const onLeave = () => (currentColor.value = '#546e7a')
 </script>
 
 <template>
-  <div class="incoming-list__delete" @mouseenter="onEnter" @mouseleave="onLeave">
+  <div class="delete" @mouseenter="onEnter" @mouseleave="onLeave">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -24,4 +24,8 @@ const onLeave = () => (currentColor.value = '#546e7a')
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.delete {
+  cursor: pointer;
+}
+</style>

@@ -1,4 +1,6 @@
 export interface Product {
+  orderDate: string
+  orderName: string
   id: number
   serialNumber: number
   photo: string

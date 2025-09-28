@@ -27,7 +27,7 @@ const props = defineProps<GroupProductList>()
         </div>
         <div class="group-products__availability">Свободен</div>
         <div class="group-products__delete">
-          <ButtonsTrash />
+          <UiTrash />
         </div>
       </div>
     </div>

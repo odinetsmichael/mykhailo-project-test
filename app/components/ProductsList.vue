@@ -37,16 +37,34 @@ function formatDate(dateStr: string): string {
       <span v-if="product.availability">Новый</span>
       <span v-if="!product.availability">Б/У</span>
     </div>
+    <div class="product-item__cost">
+      <span class="incoming-list__cost-usd">{{ product.price[0]?.value }} $</span>
+      <span class="incoming-list__cost-uah">{{ product.price[1]?.value }} UAH</span>
+    </div>
+    <div class="product-item__group-name">Длинное предленное предленнючее название группы</div>
+    <div class="product-item__user-name">Христорождественский Александр</div>
+    <div class="product-item__order-name">{{ product.orderName }}</div>
+    <div class="product-item__order-date">
+      <div class="product-item__order-date_top">
+        {{ formatIncomingDate(product.orderDate).topLabel }}/12
+      </div>
+      <div class="product-item__order-date_bottom">
+        {{ formatIncomingDate(product.orderDate).display }}
+      </div>
+    </div>
+    <div class="product-item__delete">
+      <UiTrash />
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .products-list {
   display: grid;
-  grid-template-columns: 0.1fr 0.4fr 2fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 0.1fr 0.4fr 2fr 0.5fr 0.5fr 0.5fr 0.5fr 2fr 2fr 2fr 2fr 0.1fr;
   align-items: center;
   justify-content: center;
-  width: 100%;
+
   height: 7rem;
   border: 0.1rem solid $border-grey;
   border-radius: $default-br;
@@ -114,6 +132,55 @@ function formatDate(dateStr: string): string {
     justify-content: center;
     color: $text-dark-grey;
     font-size: 1.4rem;
+  }
+  .product-item__cost {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+    .incoming-list__cost-usd {
+      font-size: 1.2rem;
+      color: $text-light-grey;
+    }
+
+    .incoming-list__cost-uah {
+      color: $text-dark-grey;
+    }
+  }
+  .product-item__group-name {
+    font-weight: 500;
+    color: $text-dark-grey;
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+  .product-item__user-name {
+    font-weight: 500;
+    color: $text-dark-grey;
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+  .product-item__order-name {
+    font-weight: 500;
+    color: $text-dark-grey;
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+  .product-item__order-date {
+    display: flex;
+    flex-direction: column;
+    .product-item__order-date_top {
+      display: flex;
+      justify-content: center;
+      @include order-date-top;
+    }
+    .product-item__order-date_bottom {
+      display: flex;
+      justify-content: center;
+      @include order-date-bottom;
+    }
   }
 }
 </style>

@@ -1,6 +1,5 @@
 export default defineEventHandler(async (event) => {
   const products = await $fetch('/api/products-get')
-
   const orders = [
     {
       id: 1,

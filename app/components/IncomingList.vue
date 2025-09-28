@@ -19,7 +19,7 @@ const props = defineProps<IncomingList>()
 
     <div class="incoming-list__products">
       <div class="incoming-list__products-menu">
-        <ButtonsMenu />
+        <UiMenu />
       </div>
 
       <div class="incoming-list__products-count">
@@ -41,7 +41,7 @@ const props = defineProps<IncomingList>()
     </div>
 
     <div class="incoming-list__delete">
-      <ButtonsTrash />
+      <UiTrash />
     </div>
   </div>
 </template>

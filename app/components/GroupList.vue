@@ -20,7 +20,7 @@ const handleClick = () => {
 <template>
   <div class="group-list" @click="handleClick">
     <div class="group-list__menu">
-      <ButtonsMenu />
+      <UiMenu />
     </div>
 
     <div class="group-list__count">

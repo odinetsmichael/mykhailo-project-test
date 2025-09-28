@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { Product } from '~/composables/types/orders'
+import type { Order, Product } from '~/composables/types/orders'
 import { useProducts } from '~/composables/useProducts'
 import { MenuList } from '@/types/enums'
 
 const { getProducts } = useProducts()
+const { getOrders } = useOrders()
 
 const products = ref<Product[]>([])
 const loading = ref(false)
@@ -11,21 +12,35 @@ const error = ref<string | null>(null)
 const type = ref<string[] | undefined>(['Monitor', 'Laptop'])
 const specification = ref<string[] | undefined>(['specification1', 'specification2'])
 
+const orderMap = new Map()
 onMounted(async () => {
   loading.value = true
   try {
     products.value = await getProducts()
+    const orders = await getOrders()
+    orders.forEach((o) => {
+      orderMap.set(o.id, o)
+    })
+    console.log(orders)
   } catch (e: any) {
     error.value = e.message || 'Ошибка загрузки продуктов'
   } finally {
     loading.value = false
   }
 })
+
+const allProducts = (p: Product[]) => {
+  return p.map((e) => {
+    e.orderName = orderMap.get(e.order).title || ''
+    e.orderDate = orderMap.get(e.order).date || ''
+    return e
+  })
+}
 </script>
 
 <template>
   <NuxtLayout>
-    <div>
+    <div class="wrapper">
       <SubHeader
         :title="MenuList.PRODUCTS"
         :max-items="products.length"
@@ -34,8 +49,11 @@ onMounted(async () => {
       />
       <div v-if="loading">Загрузка...</div>
       <div v-else-if="error" class="error">{{ error }}</div>
+
       <div v-else class="products-list-wrapper">
-        <ProductsList :products="products || []" />
+        <UiHorizontalScroll>
+          <ProductsList :products="allProducts(products) || []" />
+        </UiHorizontalScroll>
       </div>
     </div>
   </NuxtLayout>
@@ -43,8 +61,11 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .products-list-wrapper {
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow-x: hidden;
 }
 </style>

@@ -14,22 +14,22 @@ onMounted(() => {
     <SubHeader :title="MenuList.INCOMING" :max-items="ordersWithCost.length" />
     <div v-if="loading">Загрузка...</div>
     <div v-else-if="error" class="error">{{ error }}</div>
-    <div v-else class="incoming-lists">
-      <IncomingList
+    <div v-else class="order-lists">
+      <OrderList
         v-for="order in ordersWithCost"
         :key="order.id"
         :num-of-products="order.products.length"
-        :incoming-name="order.title"
-        :incoming-date="order.date"
-        :incoming-cost-uah="order.totalCostUAH"
-        :incoming-cost-usd="order.totalCostUSD"
+        :order-name="order.title"
+        :order-date="order.date"
+        :order-cost-uah="order.totalCostUAH"
+        :order-cost-usd="order.totalCostUSD"
       />
     </div>
   </NuxtLayout>
 </template>
 
 <style scoped lang="scss">
-.incoming-lists {
+.order-lists {
   display: flex;
   flex-direction: column;
   gap: 1rem;

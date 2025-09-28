@@ -16,46 +16,48 @@ function formatDate(dateStr: string): string {
 </script>
 
 <template>
-  <div class="products-list" v-for="product in products">
-    <div class="product-item__status" :class="product.status ? 'free' : 'repair'"></div>
-    <img class="product-item__image" :src="product.photo" alt="product-photo" />
-    <div class="product-item__name">
-      <span class="product-item__title">{{ product.title }}</span>
-      <div class="product-item__serial">SN-{{ product.serialNumber }}</div>
-    </div>
-    <div class="product-item__status-word-free" v-if="product.status">Свободен</div>
-    <div class="product-item__status-word-repair" v-if="!product.status">В ремонте</div>
-    <div class="product-item__guarantee">
-      <div class="product__guarantee-start">
-        <span>с </span>{{ formatDate(product.guarantee.start) }}
+  <UiStrokeWrapper v-for="product in products">
+    <div class="products-list">
+      <div class="product-item__status" :class="product.status ? 'free' : 'repair'"></div>
+      <img class="product-item__image" :src="product.photo" alt="product-photo" />
+      <div class="product-item__name">
+        <span class="product-item__title">{{ product.title }}</span>
+        <div class="product-item__serial">SN-{{ product.serialNumber }}</div>
       </div>
-      <div class="product__guarantee-end">
-        <span>по </span> {{ formatDate(product.guarantee.end) }}
+      <div class="product-item__status-word-free" v-if="product.status">Свободен</div>
+      <div class="product-item__status-word-repair" v-if="!product.status">В ремонте</div>
+      <div class="product-item__guarantee">
+        <div class="product__guarantee-start">
+          <span>с </span>{{ formatDate(product.guarantee.start) }}
+        </div>
+        <div class="product__guarantee-end">
+          <span>по </span> {{ formatDate(product.guarantee.end) }}
+        </div>
+      </div>
+      <div class="product-item__availability">
+        <span v-if="product.availability">Новый</span>
+        <span v-if="!product.availability">Б/У</span>
+      </div>
+      <div class="product-item__cost">
+        <span class="incoming-list__cost-usd">{{ product.price[0]?.value }} $</span>
+        <span class="incoming-list__cost-uah">{{ product.price[1]?.value }} UAH</span>
+      </div>
+      <div class="product-item__group-name">Длинное предленное предленнючее название группы</div>
+      <div class="product-item__user-name">Христорождественский Александр</div>
+      <div class="product-item__order-name">{{ product.orderName }}</div>
+      <div class="product-item__order-date">
+        <div class="product-item__order-date_top">
+          {{ formatIncomingDate(product.orderDate).topLabel }}/12
+        </div>
+        <div class="product-item__order-date_bottom">
+          {{ formatIncomingDate(product.orderDate).display }}
+        </div>
+      </div>
+      <div class="product-item__delete">
+        <UiTrash />
       </div>
     </div>
-    <div class="product-item__availability">
-      <span v-if="product.availability">Новый</span>
-      <span v-if="!product.availability">Б/У</span>
-    </div>
-    <div class="product-item__cost">
-      <span class="incoming-list__cost-usd">{{ product.price[0]?.value }} $</span>
-      <span class="incoming-list__cost-uah">{{ product.price[1]?.value }} UAH</span>
-    </div>
-    <div class="product-item__group-name">Длинное предленное предленнючее название группы</div>
-    <div class="product-item__user-name">Христорождественский Александр</div>
-    <div class="product-item__order-name">{{ product.orderName }}</div>
-    <div class="product-item__order-date">
-      <div class="product-item__order-date_top">
-        {{ formatIncomingDate(product.orderDate).topLabel }}/12
-      </div>
-      <div class="product-item__order-date_bottom">
-        {{ formatIncomingDate(product.orderDate).display }}
-      </div>
-    </div>
-    <div class="product-item__delete">
-      <UiTrash />
-    </div>
-  </div>
+  </UiStrokeWrapper>
 </template>
 
 <style lang="scss" scoped>
@@ -64,13 +66,6 @@ function formatDate(dateStr: string): string {
   grid-template-columns: 0.1fr 0.4fr 2fr 0.5fr 0.5fr 0.5fr 0.5fr 2fr 2fr 2fr 2fr 0.1fr;
   align-items: center;
   justify-content: center;
-
-  height: 7rem;
-  border: 0.1rem solid $border-grey;
-  border-radius: $default-br;
-  transition: $default-transition;
-  padding: 1rem 2rem;
-
   .product-item__status {
     width: 0.8rem;
     height: 0.8rem;

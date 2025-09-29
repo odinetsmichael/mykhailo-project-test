@@ -8,7 +8,12 @@ interface OrderList {
   orderCostUah: number
   orderCostUsd: number
 }
+const show = ref(false)
 
+const deleteItem = () => {
+  console.log('Удалено!')
+  show.value = false
+}
 const props = defineProps<OrderList>()
 </script>
 
@@ -43,7 +48,21 @@ const props = defineProps<OrderList>()
       </div>
 
       <div class="order-list__delete">
-        <UiTrash />
+        <UiTrash @click="show = true" />
+        <PopupsDelete
+          :visible="show"
+          title="Вы уверены, что хотите удалить этот приход?"
+          @close="show = false"
+          @cancel="show = false"
+          @confirm="deleteItem"
+        >
+          <div class="item-info">
+            <div>
+              <p>{{ orderName }}</p>
+              <small>SN-12.3456789</small>
+            </div>
+          </div>
+        </PopupsDelete>
       </div>
     </div>
   </UiStrokeWrapper>
@@ -64,6 +83,9 @@ const props = defineProps<OrderList>()
   .order-list__name {
     margin-right: $default-margin;
     @include order-name;
+    .text {
+      border-bottom: 0.2rem solid $border-grey;
+    }
   }
 
   .order-list__products {

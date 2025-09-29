@@ -39,12 +39,18 @@ function formatDate(dateStr: string): string {
         <span v-if="!product.availability">Б/У</span>
       </div>
       <div class="product-item__cost">
-        <span class="incoming-list__cost-usd">{{ product.price[0]?.value }} $</span>
-        <span class="incoming-list__cost-uah">{{ product.price[1]?.value }} UAH</span>
+        <span class="usd">{{ product.price[0]?.value }} $</span>
+        <span class="uah">{{ product.price[1]?.value }} UAH</span>
       </div>
-      <div class="product-item__group-name">Длинное предленное предленнючее название группы</div>
-      <div class="product-item__user-name">Христорождественский Александр</div>
-      <div class="product-item__order-name">{{ product.orderName }}</div>
+      <div class="product-item__group-name">
+        <span class="text">Длинное предленное предленнючее название группы</span>
+      </div>
+      <div class="product-item__user-name">
+        <span class="text">Христорождественский Александр</span>
+      </div>
+      <div class="product-item__order-name">
+        <span class="text">{{ product.orderName }}</span>
+      </div>
       <div class="product-item__order-date">
         <div class="product-item__order-date_top">
           {{ formatIncomingDate(product.orderDate).topLabel }}/12
@@ -121,39 +127,16 @@ function formatDate(dateStr: string): string {
     font-size: 1.4rem;
   }
   .product-item__cost {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    line-height: 1.2;
-    .incoming-list__cost-usd {
-      font-size: 1.2rem;
-      color: $text-light-grey;
-    }
-
-    .incoming-list__cost-uah {
-      color: $text-dark-grey;
-    }
+    @include order-cost;
   }
   .product-item__group-name {
-    font-weight: 500;
-    color: $text-dark-grey;
-    &::first-letter {
-      text-transform: uppercase;
-    }
+    @include order-name;
   }
   .product-item__user-name {
-    font-weight: 500;
-    color: $text-dark-grey;
-    &::first-letter {
-      text-transform: uppercase;
-    }
+    @include order-name;
   }
   .product-item__order-name {
-    font-weight: 500;
-    color: $text-dark-grey;
-    &::first-letter {
-      text-transform: uppercase;
-    }
+    @include order-name;
   }
   .product-item__order-date {
     display: flex;

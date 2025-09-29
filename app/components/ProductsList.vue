@@ -63,7 +63,7 @@ function formatDate(dateStr: string): string {
 <style lang="scss" scoped>
 .products-list {
   display: grid;
-  grid-template-columns: 0.1fr 0.4fr 2fr 0.5fr 0.5fr 0.5fr 0.5fr 2fr 2fr 2fr 2fr 0.1fr;
+  grid-template-columns: 0.2fr 0.4fr 2fr 0.5fr 0.5fr 0.5fr 0.5fr 2fr 2fr 2fr 2fr 0.1fr;
   align-items: center;
   justify-content: center;
   .product-item__status {
@@ -78,31 +78,23 @@ function formatDate(dateStr: string): string {
     background-color: $base-black-title;
   }
   .product-item__image {
-    width: 4rem;
-    height: 4rem;
-    object-fit: contain;
-    flex-shrink: 0;
+    @include list-image;
   }
   .product-item__name {
     flex: 1;
     overflow: hidden;
     .product-item__title {
-      font-size: 1.4rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      border-bottom: 0.2rem solid $border-grey;
+      @include product-name;
     }
     .product-item__serial {
-      font-size: 1.2rem;
-      color: $text-light-grey;
+      @include product-serial;
     }
   }
   .product-item__status-word-free {
-    color: $free-green;
+    @include product-status-free;
   }
   .product-item__status-word-repair {
-    color: $base-black-title;
+    @include product-status-repair;
   }
   .product-item__guarantee {
     display: flex;

@@ -58,11 +58,7 @@ const handleClick = () => {
   }
 
   .group-list__count {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    line-height: 1.2;
-
+    @include order-products-count;
     .group-list__number {
       @include order-number-style;
     }

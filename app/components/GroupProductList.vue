@@ -25,7 +25,8 @@ const props = defineProps<GroupProductList>()
           <span class="group-products__name">{{ product.title }}</span>
           <div class="group-products__serial">SN-{{ product.serialNumber }}</div>
         </div>
-        <div class="group-products__availability">Свободен</div>
+        <div class="group-products__status-word-free" v-if="product.status">Свободен</div>
+        <div class="group-products__status-word-repair" v-if="!product.status">В ремонте</div>
         <div class="group-products__delete">
           <UiTrash />
         </div>
@@ -103,31 +104,23 @@ const props = defineProps<GroupProductList>()
         flex-shrink: 0;
       }
       .group-products__image {
-        width: 4rem;
-        height: 4rem;
-        object-fit: contain;
-        flex-shrink: 0;
+        @include list-image;
       }
       .group-products__info {
         flex: 1;
         overflow: hidden;
         .group-products__name {
-          font-size: 1.4rem;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          border-bottom: 0.2rem solid $border-grey;
+          @include product-name;
         }
         .group-products__serial {
-          font-size: 1.2rem;
-          color: $text-light-grey;
+          @include product-serial;
         }
       }
-      .group-products__availability {
-        font-size: 1.2rem;
-        color: $free-green;
-        margin-right: 1rem;
-        flex-shrink: 0;
+      .group-products__status-word-free {
+        @include product-status-free;
+      }
+      .group-products__status-word-repair {
+        @include product-status-repair;
       }
     }
   }

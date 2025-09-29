@@ -21,3 +21,65 @@
 @mixin order-date-bottom {
   color: $text-dark-grey;
 }
+
+@mixin order-name {
+  .text {
+    font-weight: 500;
+    color: $text-dark-grey;
+    border-bottom: 0.2rem solid $border-grey;
+  }
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+@mixin order-products-count {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+}
+
+@mixin order-cost {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+  .usd {
+    font-size: 1.2rem;
+    color: $text-light-grey;
+  }
+  .uah {
+    color: $text-dark-grey;
+  }
+}
+@mixin list-image {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+@mixin product-name {
+  font-size: 1.4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-bottom: 0.2rem solid $border-grey;
+}
+@mixin product-serial {
+  font-size: 1.2rem;
+  color: $text-light-grey;
+}
+
+@mixin product-status-free {
+  font-size: 1.4rem;
+  color: $free-green;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+@mixin product-status-repair {
+  font-size: 1.4rem;
+  color: $base-black-title;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}

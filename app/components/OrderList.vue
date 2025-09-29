@@ -16,7 +16,7 @@ const props = defineProps<OrderList>()
   <UiStrokeWrapper>
     <div class="order-list">
       <div class="order-list__name">
-        <span class="order-list__name-text">{{ orderName }}</span>
+        <span class="text">{{ orderName }}</span>
       </div>
 
       <div class="order-list__products">
@@ -38,8 +38,8 @@ const props = defineProps<OrderList>()
       </div>
 
       <div class="order-list__cost">
-        <span class="order-list__cost-usd">{{ orderCostUah }} $</span>
-        <span class="order-list__cost-uah">{{ orderCostUsd }} UAH</span>
+        <span class="usd">{{ orderCostUah }} $</span>
+        <span class="uah">{{ orderCostUsd }} UAH</span>
       </div>
 
       <div class="order-list__delete">
@@ -63,16 +63,7 @@ const props = defineProps<OrderList>()
 
   .order-list__name {
     margin-right: $default-margin;
-
-    .order-list__name-text {
-      font-weight: 500;
-      color: $text-dark-grey;
-      border-bottom: 0.2rem solid $border-grey;
-    }
-
-    &::first-letter {
-      text-transform: uppercase;
-    }
+    @include order-name;
   }
 
   .order-list__products {
@@ -85,11 +76,7 @@ const props = defineProps<OrderList>()
     }
 
     .order-list__products-count {
-      display: flex;
-      width: 100%;
-      flex-direction: column;
-      align-items: flex-start;
-      line-height: 1.2;
+      @include order-products-count;
     }
 
     .order-list__products-number {
@@ -117,24 +104,7 @@ const props = defineProps<OrderList>()
   }
 
   .order-list__cost {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    line-height: 1.2;
-    .order-list__cost-usd {
-      font-size: 1.2rem;
-      color: $text-light-grey;
-    }
-
-    .order-list__cost-uah {
-      color: $text-dark-grey;
-    }
-  }
-
-  .order-list__delete {
-    text-align: center;
-    cursor: pointer;
-    color: $text-dark-grey;
+    @include order-cost;
   }
 }
 </style>

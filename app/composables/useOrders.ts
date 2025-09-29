@@ -22,22 +22,22 @@ export function useOrders() {
 
   const getOrderById = (id: number) => $fetch<Order>(`/api/orders/${id}`)
 
-  const createOrder = (order: any) =>
-    $fetch<Order>('/api/orders', {
-      method: 'POST',
-      body: order,
-    })
+  // const createOrder = (order: any) =>
+  //   $fetch<Order>('/api/orders', {
+  //     method: 'POST',
+  //     body: order,
+  //   })
 
-  const updateOrder = (id: number, order: any) =>
-    $fetch<Order>(`/api/orders/${id}`, {
-      method: 'PUT',
-      body: order,
-    })
+  // const updateOrder = (id: number, order: any) =>
+  //   $fetch<Order>(`/api/orders/${id}`, {
+  //     method: 'PUT',
+  //     body: order,
+  //   })
 
-  const deleteOrder = (id: number) =>
-    $fetch<Order>(`/api/orders/${id}`, {
-      method: 'DELETE',
-    })
+  // const deleteOrder = (id: number) =>
+  //   $fetch<Order>(`/api/orders/${id}`, {
+  //     method: 'DELETE',
+  //   })
 
   const ordersWithCost = computed<OrderWithCost[]>(() =>
     orders.value.map((order) => ({ ...order, ...calculateOrderCosts(order) }))
@@ -50,8 +50,8 @@ export function useOrders() {
     error,
     getOrders,
     getOrderById,
-    createOrder,
-    updateOrder,
-    deleteOrder,
+    // createOrder,
+    // updateOrder,
+    // deleteOrder,
   }
 }

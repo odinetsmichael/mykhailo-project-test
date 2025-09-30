@@ -5,6 +5,20 @@ interface GroupProductList {
   orderName: string
   products: Product[]
 }
+
+const selectedProduct = ref<Product | null>(null)
+
+const showPopup = ref<boolean>(false)
+
+const closeDeletePopup = () => {
+  showPopup.value = false
+  selectedProduct.value = null
+}
+const openDeletePopup = (product: Product) => {
+  selectedProduct.value = product
+  showPopup.value = true
+}
+
 const props = defineProps<GroupProductList>()
 </script>
 
@@ -19,7 +33,7 @@ const props = defineProps<GroupProductList>()
 
     <div class="group-products__list">
       <div v-for="product in products" :key="product.id" class="group-products__item">
-        <div class="group-products__status"></div>
+        <div class="group-products__status" :class="product.status ? 'free' : 'repair'"></div>
         <img :src="product.photo" alt="product-photo" class="group-products__image" />
         <div class="group-products__info">
           <span class="group-products__name">{{ product.title }}</span>
@@ -28,11 +42,19 @@ const props = defineProps<GroupProductList>()
         <div class="group-products__status-word-free" v-if="product.status">Свободен</div>
         <div class="group-products__status-word-repair" v-if="!product.status">В ремонте</div>
         <div class="group-products__delete">
-          <UiTrash />
+          <UiTrash @click="openDeletePopup(product)" />
         </div>
       </div>
     </div>
   </div>
+  <PopupsDelete
+    :visible="showPopup"
+    title="Вы уверены, что хотите удалить этот продукт?"
+    :selected-product="selectedProduct"
+    @close="closeDeletePopup"
+  >
+    <div class="item-info"></div>
+  </PopupsDelete>
 </template>
 
 <style lang="scss" scoped>
@@ -100,8 +122,13 @@ const props = defineProps<GroupProductList>()
         width: 0.8rem;
         height: 0.8rem;
         border-radius: 50%;
-        background-color: $free-green;
         flex-shrink: 0;
+      }
+      .free {
+        background-color: $free-green;
+      }
+      .repair {
+        background-color: $base-black-title;
       }
       .group-products__image {
         @include list-image;

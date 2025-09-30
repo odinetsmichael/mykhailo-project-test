@@ -1,32 +1,44 @@
 <script setup lang="ts">
-const props = defineProps<{
+import type { Product } from '~/types/interfaces'
+
+interface PopupDelete {
   visible: boolean
   title?: string
-}>()
+  itemId?: string
+  selectedProduct?: Product | null
+}
+
+const props = defineProps<PopupDelete>()
 
 const emit = defineEmits<{
   (e: 'confirm'): void
-  (e: 'cancel'): void
   (e: 'close'): void
 }>()
 
 const close = () => emit('close')
-const cancel = () => emit('cancel')
 const confirm = () => emit('confirm')
 </script>
 
 <template>
   <div v-if="visible" class="popup-overlay" @click.self="close">
-    <div class="popup-content">
+    <div class="popup-content" @click.stop>
       <button class="popup-close" @click="close">✕</button>
       <h3 class="popup-title">{{ title }}</h3>
 
       <div class="popup-body">
+        <div class="product-popup" v-if="selectedProduct">
+          <div
+            class="product-popup__status"
+            :class="selectedProduct?.status ? 'free' : 'repair'"
+          ></div>
+          <img class="product-popup__image" :src="selectedProduct.photo" alt="product-photo" />
+        </div>
+
         <slot />
       </div>
 
       <div class="popup-actions">
-        <button class="btn-cancel" @click="cancel">Отменить</button>
+        <button class="btn-cancel" @click="close">Отменить</button>
         <button class="btn-delete" @click="confirm">Удалить</button>
       </div>
     </div>
@@ -34,6 +46,37 @@ const confirm = () => emit('confirm')
 </template>
 
 <style lang="scss" scoped>
+.product-popup {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  .product-popup__status {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .free {
+    background-color: $free-green;
+  }
+  .repair {
+    background-color: $base-black-title;
+  }
+  .product-popup__image {
+    @include list-image;
+  }
+  .group-products__info {
+    flex: 1;
+    overflow: hidden;
+    .group-products__name {
+      @include product-name;
+    }
+    .group-products__serial {
+      @include product-serial;
+    }
+  }
+}
+
 .popup-overlay {
   position: fixed;
   inset: 0;
@@ -76,6 +119,9 @@ const confirm = () => emit('confirm')
     }
     .popup-body {
       padding: 1rem 2.4rem;
+      &:deep(.order-name) {
+        @include order-name;
+      }
     }
     .popup-actions {
       display: flex;

@@ -8,12 +8,11 @@ interface OrderList {
   orderCostUah: number
   orderCostUsd: number
 }
-const show = ref(false)
-
 const deleteItem = () => {
   console.log('Удалено!')
   show.value = false
 }
+const show = ref(false)
 const props = defineProps<OrderList>()
 </script>
 
@@ -57,9 +56,8 @@ const props = defineProps<OrderList>()
           @confirm="deleteItem"
         >
           <div class="item-info">
-            <div>
-              <p>{{ orderName }}</p>
-              <small>SN-12.3456789</small>
+            <div class="order-name">
+              <p class="text">{{ orderName }}</p>
             </div>
           </div>
         </PopupsDelete>

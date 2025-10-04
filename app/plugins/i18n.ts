@@ -10,7 +10,15 @@ export default defineNuxtPlugin((nuxtApp) => {
       time: 'Время',
       activeUsers: 'Активных пользователей',
     },
+    uk: {
+      welcome: 'Ласкаво просимо',
+      date: 'Дата',
+      time: 'Час',
+      activeUsers: 'Активних користувачів',
+    },
   }
+
+  type Locales = keyof typeof messages
 
   const i18n = createI18n({
     legacy: false,
@@ -23,10 +31,10 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.config.globalProperties.$t = i18n.global.t
   nuxtApp.vueApp.config.globalProperties.$locale = i18n.global.locale
 
-  // ✅ безопасный способ для SSR + CSR
   const url = useRequestURL()
   const lang = url.searchParams.get('lang')
+
   if (lang && Object.keys(messages).includes(lang)) {
-    i18n.global.locale.value = lang as keyof typeof messages
+    i18n.global.locale.value = lang as Locales
   }
 })

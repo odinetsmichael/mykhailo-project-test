@@ -4,7 +4,7 @@
   <div class="layout">
     <Header />
     <div class="layout__body">
-      <LeftMenu />
+      <NavigationMenu />
       <main class="layout__content">
         <slot />
       </main>

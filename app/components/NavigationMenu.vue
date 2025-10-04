@@ -17,7 +17,7 @@ const menuItems = [
 ]
 </script>
 <template>
-  <section class="left-menu">
+  <section class="navigation-menu">
     <div class="avatar">
       <img class="avatar-item" src="../assets/img/avatar.webp" alt="logo" />
     </div>
@@ -36,7 +36,7 @@ const menuItems = [
 </template>
 
 <style lang="scss" scoped>
-.left-menu {
+.navigation-menu {
   display: flex;
   flex-direction: column;
   align-items: center;

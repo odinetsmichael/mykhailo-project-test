@@ -21,7 +21,6 @@ onMounted(async () => {
     orders.forEach((o) => {
       orderMap.set(o.id, o)
     })
-    console.log(orders)
   } catch (e: any) {
     error.value = e.message || 'Ошибка загрузки продуктов'
   } finally {
@@ -63,9 +62,6 @@ const allProducts = (p: Product[]) => {
 .products-list-wrapper {
   width: 100%;
   max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
   overflow-x: hidden;
 }
 </style>

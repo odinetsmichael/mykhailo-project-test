@@ -16,7 +16,9 @@
   .wide-2x-container {
     width: 200%;
     min-width: 200%;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
   &::-webkit-scrollbar-thumb {
     background-color: $scroll-color;

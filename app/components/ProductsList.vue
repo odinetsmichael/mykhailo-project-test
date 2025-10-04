@@ -75,16 +75,16 @@ function formatGuaranteeDate(dateStr: string): string {
           <UiTrash @click="openDeletePopup(product)" />
         </div>
       </div>
-      <PopupsDelete
-        :visible="showPopup"
-        title="Вы уверены, что хотите удалить этот продукт?"
-        :selected-product="selectedProduct"
-        @close="closeDeletePopup"
-      >
-        <div class="item-info"></div>
-      </PopupsDelete>
     </div>
   </UiStrokeWrapper>
+  <PopupsDelete
+    :visible="showPopup"
+    title="Вы уверены, что хотите удалить этот продукт?"
+    :selected-product="selectedProduct"
+    @close="closeDeletePopup"
+  >
+    <div class="item-info"></div>
+  </PopupsDelete>
 </template>
 
 <style lang="scss" scoped>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Product } from '~/types/interfaces'
-const { $t, $locale } = useNuxtApp()
 interface PopupDelete {
   visible: boolean
   title?: string
@@ -84,7 +83,7 @@ const confirm = () => emit('confirm')
 .popup-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;

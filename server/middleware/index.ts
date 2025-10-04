@@ -1,6 +1,6 @@
 import { Server } from 'socket.io'
 
-let io: Server | null = null!
+let io: Server | null = null
 let activeUsers = 0
 export default defineEventHandler((event) => {
   const { req, res } = event.node
@@ -20,11 +20,13 @@ export default defineEventHandler((event) => {
     io.on('connection', (socket) => {
       activeUsers++
       console.log('🟢 Клиент подключился. Всего:', activeUsers)
+      // @ts-ignore
       io.emit('activeUsers', activeUsers)
 
       socket.on('disconnect', () => {
         activeUsers--
         console.log('🔴 Клиент отключился. Осталось:', activeUsers)
+        // @ts-ignore
         io.emit('activeUsers', activeUsers)
       })
     })

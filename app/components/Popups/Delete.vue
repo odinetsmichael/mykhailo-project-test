@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Product } from '~/types/interfaces'
-
+const { $t, $locale } = useNuxtApp()
 interface PopupDelete {
   visible: boolean
   title?: string

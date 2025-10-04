@@ -9,10 +9,25 @@ interface SubHeader {
 }
 
 const props = defineProps<SubHeader>()
+
+const selectedType = ref<string>('')
+const selectedSpecification = ref<string>('')
+
+const emit = defineEmits<{
+  (e: 'filter-changed', filters: { type: string; specification: string }): void
+}>()
+
+function updateFilters() {
+  emit('filter-changed', {
+    type: selectedType.value,
+    specification: selectedSpecification.value,
+  })
+}
 </script>
+
 <template>
   <div class="sub-header">
-    <p>{{ props.title }} / {{ maxItems }}</p>
+    <p>{{ props.title }} / {{ props.maxItems }}</p>
 
     <div
       v-if="
@@ -21,15 +36,18 @@ const props = defineProps<SubHeader>()
       class="filters-wrapper"
     >
       <div class="filter">
-        <label for="inlineFormSelectPref" class="filter-label">Тип:</label>
-        <select class="form-select" id="inlineFormSelectPref">
-          <option :value="val" v-for="val in type">{{ val }}</option>
+        <label class="filter-label">Тип:</label>
+        <select class="form-select" v-model="selectedType" @change="updateFilters">
+          <option value="">Все</option>
+          <option :value="val" v-for="val in props.type" :key="val">{{ val }}</option>
         </select>
       </div>
+
       <div class="filter">
-        <label for="inlineFormSelectPref" class="filter-label">Спецификация:</label>
-        <select class="form-select" id="inlineFormSelectPref">
-          <option :value="val" v-for="val in specification">{{ val }}</option>
+        <label class="filter-label">Спецификация:</label>
+        <select class="form-select" v-model="selectedSpecification" @change="updateFilters">
+          <option value="">Все</option>
+          <option :value="val" v-for="val in props.specification" :key="val">{{ val }}</option>
         </select>
       </div>
     </div>

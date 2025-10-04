@@ -18,8 +18,8 @@ const handleClick = () => {
 </script>
 
 <template>
-  <UiStrokeWrapper group>
-    <div class="group-list" @click="handleClick">
+  <UiStrokeWrapper group @click="handleClick">
+    <div class="group-list">
       <div class="group-list__menu">
         <UiMenu />
       </div>

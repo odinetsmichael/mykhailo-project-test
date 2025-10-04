@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getProductWord, formatIncomingDate } from '~/utils/orders'
+import { getProductWord } from '~/utils/orders'
 
 interface GroupList {
   numOfProducts: number
@@ -30,8 +30,8 @@ const handleClick = () => {
       </div>
 
       <div class="group-list__date">
-        <div class="group-list__date-top">{{ formatIncomingDate(incomingDate).topLabel }}/12</div>
-        <div class="group-list__date-bottom">{{ formatIncomingDate(incomingDate).display }}</div>
+        <div class="group-list__date-top">{{ formatDate(incomingDate).topLabel }}/12</div>
+        <div class="group-list__date-bottom">{{ formatDate(incomingDate).display }}</div>
       </div>
     </div>
   </UiStrokeWrapper>

@@ -1,3 +1,14 @@
+export interface Guarantee {
+  start: string
+  end: string
+}
+
+export interface Price {
+  value: number
+  symbol: string
+  isDefault: number
+}
+
 export interface Product {
   orderDate: string
   orderName: string
@@ -12,15 +23,13 @@ export interface Product {
   order: number
   date: string
   status: boolean // true = новый, false = бу
-  availability: boolean // true = в свободен, false = в ремонте
-}
-export interface Guarantee {
-  start: string
-  end: string
+  availability: boolean // true = в ремонте, false = свободен
 }
 
-export interface Price {
-  value: number
-  symbol: string
-  isDefault: number
+export interface Order {
+  id: number
+  title: string
+  date: string
+  description: string
+  products: Product[]
 }

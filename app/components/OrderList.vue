@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getProductWord, formatIncomingDate } from '~/utils/orders'
+import { getProductWord } from '~/utils/orders'
 
 interface OrderList {
   orderName: string
@@ -37,8 +37,8 @@ const props = defineProps<OrderList>()
       </div>
 
       <div class="order-list__date">
-        <div class="order-list__date-top">{{ formatIncomingDate(orderDate).topLabel }}/12</div>
-        <div class="order-list__date-bottom">{{ formatIncomingDate(orderDate).display }}</div>
+        <div class="order-list__date-top">{{ formatDate(orderDate).topLabel }}/12</div>
+        <div class="order-list__date-bottom">{{ formatDate(orderDate).display }}</div>
       </div>
 
       <div class="order-list__cost">

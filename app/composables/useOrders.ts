@@ -1,4 +1,4 @@
-import type { Order } from './types/orders'
+import type { Order } from '~/types/interfaces'
 import { calculateOrderCosts, type OrderWithCost } from './useOrderCosts'
 
 export function useOrders() {

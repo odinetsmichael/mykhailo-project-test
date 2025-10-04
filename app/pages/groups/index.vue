@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { MenuList } from '@/types/enums'
-import type { Order } from '~/composables/types/orders'
 import { useOrders } from '~/composables/useOrders'
+import type { Order } from '~/types/interfaces'
 const { getOrders } = useOrders()
 const orders = ref<Order[]>([])
 const loading = ref(false)

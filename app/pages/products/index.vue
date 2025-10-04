@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Order, Product } from '~/composables/types/orders'
 import { useProducts } from '~/composables/useProducts'
 import { MenuList } from '@/types/enums'
+import type { Product } from '~/types/interfaces'
 
 const { getProducts } = useProducts()
 const { getOrders } = useOrders()

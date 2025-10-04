@@ -6,19 +6,6 @@ interface GroupProductList {
   products: Product[]
 }
 
-const selectedProduct = ref<Product | null>(null)
-
-const showPopup = ref<boolean>(false)
-
-const closeDeletePopup = () => {
-  showPopup.value = false
-  selectedProduct.value = null
-}
-const openDeletePopup = (product: Product) => {
-  selectedProduct.value = product
-  showPopup.value = true
-}
-
 const props = defineProps<GroupProductList>()
 </script>
 

@@ -1,4 +1,4 @@
-import type { Order } from '~/composables/types/orders'
+import type { Order } from '~/types/interfaces'
 
 export type OrderWithCost = Order & {
   totalCostUAH: number

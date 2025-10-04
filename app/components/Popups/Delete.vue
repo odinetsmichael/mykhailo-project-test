@@ -32,6 +32,10 @@ const confirm = () => emit('confirm')
             :class="selectedProduct?.status ? 'free' : 'repair'"
           ></div>
           <img class="product-popup__image" :src="selectedProduct.photo" alt="product-photo" />
+          <div class="product-popup__name">
+            <span class="product-popup__title">{{ selectedProduct.title }}</span>
+            <div class="product-popup__serial">SN-{{ selectedProduct.serialNumber }}</div>
+          </div>
         </div>
 
         <slot />
@@ -49,7 +53,7 @@ const confirm = () => emit('confirm')
 .product-popup {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 4rem;
   .product-popup__status {
     width: 0.8rem;
     height: 0.8rem;
@@ -65,13 +69,13 @@ const confirm = () => emit('confirm')
   .product-popup__image {
     @include list-image;
   }
-  .group-products__info {
+  .product-popup__name {
     flex: 1;
     overflow: hidden;
-    .group-products__name {
+    .product-popup__title {
       @include product-name;
     }
-    .group-products__serial {
+    .product-popup__serial {
       @include product-serial;
     }
   }

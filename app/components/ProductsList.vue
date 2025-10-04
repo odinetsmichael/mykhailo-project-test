@@ -5,8 +5,19 @@ interface ProductsList {
   products: Product[]
 }
 const props = defineProps<ProductsList>()
+const selectedProduct = ref<Product | null>(null)
 
-function formatDate(dateStr: string): string {
+const showPopup = ref<boolean>(false)
+
+const closeDeletePopup = () => {
+  showPopup.value = false
+  selectedProduct.value = null
+}
+const openDeletePopup = (product: Product) => {
+  selectedProduct.value = product
+  showPopup.value = true
+}
+function formatGuaranteeDate(dateStr: string): string {
   const d = new Date(dateStr)
   const day = String(d.getDate()).padStart(2, '0')
   const month = String(d.getMonth() + 1).padStart(2, '0')
@@ -28,10 +39,10 @@ function formatDate(dateStr: string): string {
       <div class="product-item__status-word-repair" v-if="!product.status">В ремонте</div>
       <div class="product-item__guarantee">
         <div class="product__guarantee-start">
-          <span>с </span>{{ formatDate(product.guarantee.start) }}
+          <span>с </span>{{ formatGuaranteeDate(product.guarantee.start) }}
         </div>
         <div class="product__guarantee-end">
-          <span>по </span> {{ formatDate(product.guarantee.end) }}
+          <span>по </span> {{ formatGuaranteeDate(product.guarantee.end) }}
         </div>
       </div>
       <div class="product-item__availability">
@@ -53,15 +64,25 @@ function formatDate(dateStr: string): string {
       </div>
       <div class="product-item__order-date">
         <div class="product-item__order-date_top">
-          {{ formatIncomingDate(product.orderDate).topLabel }}/12
+          {{ formatDate(product.orderDate).topLabel }}/12
         </div>
         <div class="product-item__order-date_bottom">
-          {{ formatIncomingDate(product.orderDate).display }}
+          {{ formatDate(product.orderDate).display }}
         </div>
       </div>
       <div class="product-item__delete">
-        <UiTrash />
+        <div class="group-products__delete">
+          <UiTrash @click="openDeletePopup(product)" />
+        </div>
       </div>
+      <PopupsDelete
+        :visible="showPopup"
+        title="Вы уверены, что хотите удалить этот продукт?"
+        :selected-product="selectedProduct"
+        @close="closeDeletePopup"
+      >
+        <div class="item-info"></div>
+      </PopupsDelete>
     </div>
   </UiStrokeWrapper>
 </template>

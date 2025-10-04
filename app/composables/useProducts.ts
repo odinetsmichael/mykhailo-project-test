@@ -1,4 +1,4 @@
-import type { Product } from './types/orders'
+import type { Product } from '~/types/interfaces'
 
 export function useProducts() {
   const products = ref<Product[]>([])

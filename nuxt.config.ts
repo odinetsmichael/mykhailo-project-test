@@ -1,4 +1,9 @@
 export default defineNuxtConfig({
+  nitro: {
+    routeRules: {
+      '/socket.io/**': { cors: true },
+    },
+  },
   css: [
     'bootstrap/dist/css/bootstrap.min.css',
     '@/assets/scss/base.scss',
@@ -7,7 +12,7 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/google-fonts'],
   googleFonts: {
     families: {
-      Roboto: [300, 400, 500, 700], // веса на выбор
+      Roboto: [300, 400, 500, 700],
     },
     display: 'swap',
   },

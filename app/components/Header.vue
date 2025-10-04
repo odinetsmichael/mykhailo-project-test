@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { MONTH_NAMES } from '~/types/variables'
+const { activeUsers } = useActiveUsers()
+
 const now = new Date()
 const date = ref<string>('')
 const time = ref<string>('')
@@ -44,6 +46,7 @@ onMounted(() => {
         <div class="date__time">
           {{ time }}
         </div>
+        <div class="active-users">👥 {{ activeUsers }}</div>
       </div>
     </div>
   </header>

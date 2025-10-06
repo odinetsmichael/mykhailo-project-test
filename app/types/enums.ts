@@ -1,7 +1,7 @@
 export enum MenuList {
-  INCOMING = 'приходы',
-  GROUPS = 'группы',
-  PRODUCTS = 'продукты',
-  USERS = 'пользователи',
-  SETTINGS = 'настройки',
+  INCOMING = 'components.menu.incoming',
+  GROUPS = 'components.menu.groups',
+  PRODUCTS = 'components.menu.products',
+  USERS = 'components.menu.users',
+  SETTINGS = 'components.menu.settings',
 }

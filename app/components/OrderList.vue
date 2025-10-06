@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getProductWord } from '~/utils/orders'
+import { useI18n } from 'vue-i18n'
 
 interface OrderList {
   orderName: string
@@ -8,8 +9,10 @@ interface OrderList {
   orderCostUah: number
   orderCostUsd: number
 }
+
+const { t } = useI18n()
 const deleteItem = () => {
-  console.log('Удалено!')
+  console.log(t('components.order-list.delete-title'))
   show.value = false
 }
 const show = ref(false)
@@ -31,7 +34,7 @@ const props = defineProps<OrderList>()
         <div class="order-list__products-count">
           <span class="order-list__products-number">{{ numOfProducts }}</span>
           <span class="order-list__products-label">
-            {{ getProductWord(numOfProducts) }}
+            {{ getProductWord(numOfProducts, t('components.order-list.products-label')) }}
           </span>
         </div>
       </div>
@@ -42,15 +45,15 @@ const props = defineProps<OrderList>()
       </div>
 
       <div class="order-list__cost">
-        <span class="usd">{{ orderCostUah }} $</span>
-        <span class="uah">{{ orderCostUsd }} UAH</span>
+        <span class="usd">{{ orderCostUah }} {{ t('components.order-list.usd-label') }}</span>
+        <span class="uah">{{ orderCostUsd }} {{ t('components.order-list.uah-label') }}</span>
       </div>
 
       <div class="order-list__delete">
         <UiTrash @click="show = true" />
         <PopupsDelete
           :visible="show"
-          title="Вы уверены, что хотите удалить этот приход?"
+          :title="t('components.order-list.delete-title')"
           @close="show = false"
           @cancel="show = false"
           @confirm="deleteItem"

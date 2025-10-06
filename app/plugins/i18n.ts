@@ -1,24 +1,13 @@
 import { defineNuxtPlugin, useRequestURL } from '#app'
 import { createI18n } from 'vue-i18n'
 
-export default defineNuxtPlugin((nuxtApp) => {
-  const messages = {
-    en: { welcome: 'Welcome', date: 'Date', time: 'Time', activeUsers: 'Active Users' },
-    ru: {
-      welcome: 'Добро пожаловать',
-      date: 'Дата',
-      time: 'Время',
-      activeUsers: 'Активных пользователей',
-    },
-    uk: {
-      welcome: 'Ласкаво просимо',
-      date: 'Дата',
-      time: 'Час',
-      activeUsers: 'Активних користувачів',
-    },
-  }
+export default defineNuxtPlugin(async (nuxtApp) => {
+  const locales = ['en', 'ru', 'uk']
+  const messages: Record<string, any> = {}
 
-  type Locales = keyof typeof messages
+  for (const locale of locales) {
+    messages[locale] = await import(`~/locales/${locale}.json`).then((m) => m.default)
+  }
 
   const i18n = createI18n({
     legacy: false,
@@ -28,13 +17,17 @@ export default defineNuxtPlugin((nuxtApp) => {
   })
 
   nuxtApp.vueApp.use(i18n)
-  nuxtApp.vueApp.config.globalProperties.$t = i18n.global.t
-  nuxtApp.vueApp.config.globalProperties.$locale = i18n.global.locale
 
   const url = useRequestURL()
   const lang = url.searchParams.get('lang')
 
-  if (lang && Object.keys(messages).includes(lang)) {
-    i18n.global.locale.value = lang as Locales
+  if (lang && locales.includes(lang)) {
+    i18n.global.locale.value = lang
+  } else {
+    i18n.global.locale.value = 'ru' // дефолт
+    const router = useRouter()
+    router.replace({
+      query: { ...useRoute().query, lang: 'ru' },
+    })
   }
 })

@@ -1,14 +1,20 @@
 <script setup lang="ts">
-definePageMeta({
-  middleware: ['authenticated'],
-})
 import { MenuList } from '@/types/enums'
 import { useOrders } from '~/composables/useOrders'
 import type { Order } from '~/types/interfaces'
+import { useI18n } from 'vue-i18n'
+
+definePageMeta({
+  middleware: ['authenticated'],
+})
+
+const { t } = useI18n()
+
 const { getOrders } = useOrders()
 const orders = ref<Order[]>([])
 const loading = ref(false)
 const error = ref<string | null>(null)
+
 function calculateOrderCosts(order: Order) {
   const totalCostUAH = order.products.reduce(
     (sum, p) => sum + (p.price.find((pr) => pr.symbol === 'UAH')?.value || 0),
@@ -20,22 +26,26 @@ function calculateOrderCosts(order: Order) {
   )
   return { totalCostUAH, totalCostUSD }
 }
+
 type OrderWithCost = Order & { totalCostUAH: number; totalCostUSD: number }
 const ordersWithCost = computed<OrderWithCost[]>(() =>
   orders.value.map((order) => ({ ...order, ...calculateOrderCosts(order) }))
 )
+
 onMounted(async () => {
   loading.value = true
   try {
     orders.value = await getOrders()
   } catch (e: any) {
-    error.value = e.message || 'Ошибка загрузки заказов'
+    error.value = e.message || t('pages.groups.error')
   } finally {
     loading.value = false
   }
 })
-const selectedOrder = ref<any | null>(null)
-const handleGroupClick = (order: any) => {
+
+const selectedOrder = ref<Order | null>(null)
+
+const handleGroupClick = (order: Order) => {
   selectedOrder.value = order
 }
 </script>
@@ -43,9 +53,11 @@ const handleGroupClick = (order: any) => {
 <template>
   <NuxtLayout>
     <div>
-      <SubHeader :title="MenuList.GROUPS" :max-items="orders.length" />
-      <div v-if="loading">Загрузка...</div>
+      <SubHeader :title="t(MenuList.GROUPS)" :max-items="orders.length" />
+
+      <div v-if="loading">{{ t('pages.groups.loading') }}</div>
       <div v-else-if="error" class="error">{{ error }}</div>
+
       <div v-else class="groups-wrapper">
         <div class="groups-lists" v-if="orders.length > 0">
           <GroupList
@@ -59,6 +71,7 @@ const handleGroupClick = (order: any) => {
             @click="handleGroupClick(order)"
           />
         </div>
+
         <div v-if="selectedOrder">
           <GroupProductList :products="selectedOrder.products" :order-name="selectedOrder.title" />
         </div>
@@ -72,6 +85,7 @@ const handleGroupClick = (order: any) => {
   display: grid;
   grid-template-columns: 1fr 2fr;
   column-gap: 1rem;
+
   .groups-lists {
     display: flex;
     flex-direction: column;

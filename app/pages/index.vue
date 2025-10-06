@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { MenuList } from '@/types/enums'
 import { useOrders } from '~/composables/useOrders'
+import { useI18n } from 'vue-i18n'
+
 definePageMeta({
   middleware: ['authenticated'],
 })
+
+const { t } = useI18n()
+
 const { ordersWithCost, loading, error, getOrders } = useOrders()
 
 onMounted(() => {
@@ -13,9 +18,11 @@ onMounted(() => {
 
 <template>
   <NuxtLayout>
-    <SubHeader :title="MenuList.INCOMING" :max-items="ordersWithCost.length" />
-    <div v-if="loading">Загрузка...</div>
-    <div v-else-if="error" class="error">{{ error }}</div>
+    <SubHeader :title="t(MenuList.INCOMING)" :max-items="ordersWithCost.length" />
+
+    <div v-if="loading">{{ t('pages.orders.loading') }}</div>
+    <div v-else-if="error" class="error">{{ t('pages.orders.error') }}</div>
+
     <div v-else class="order-lists">
       <OrderList
         v-for="order in ordersWithCost"
@@ -36,6 +43,7 @@ onMounted(() => {
   flex-direction: column;
   gap: 1rem;
 }
+
 .error {
   color: red;
   font-weight: 500;

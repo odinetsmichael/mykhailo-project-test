@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { MenuList } from '@/types/enums'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const emit = defineEmits<{
   (e: 'select', item: MenuList): void
@@ -8,6 +11,7 @@ const emit = defineEmits<{
 function handleClick(item: MenuList) {
   emit('select', item)
 }
+
 const menuItems = [
   { label: MenuList.INCOMING, route: '/' },
   { label: MenuList.GROUPS, route: '/groups' },
@@ -16,6 +20,7 @@ const menuItems = [
   { label: MenuList.SETTINGS, route: '/settings' },
 ]
 </script>
+
 <template>
   <section class="navigation-menu">
     <div class="avatar">
@@ -27,9 +32,9 @@ const menuItems = [
         :key="item.label"
         class="menu-list"
         @click="handleClick(item.label)"
-        :to="item.route"
+        :to="{ path: item.route, query: $route.query }"
       >
-        {{ item.label }}
+        {{ t(item.label) }}
       </NuxtLink>
     </ul>
   </section>
@@ -42,9 +47,8 @@ const menuItems = [
   align-items: center;
   width: 30rem;
   height: 100vh;
-  -webkit-box-shadow: 1.6rem 0 1.5rem -1.3rem rgba(66, 68, 90, 0.301);
-  -moz-box-shadow: 1.6rem 0 1.5rem -1.3rem rgba(66, 68, 90, 0.301);
   box-shadow: 1.6rem 0 1.5rem -1.3rem rgba(66, 68, 90, 0.301);
+
   .avatar {
     margin-top: $default-margin;
     .avatar-item {
@@ -54,6 +58,7 @@ const menuItems = [
       object-fit: cover;
     }
   }
+
   .menu-lists {
     margin-top: $default-margin;
     display: flex;

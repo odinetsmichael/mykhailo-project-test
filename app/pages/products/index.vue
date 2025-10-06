@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import { useProducts } from '~/composables/useProducts'
+import { useOrders } from '~/composables/useOrders'
 import { MenuList } from '@/types/enums'
 import type { Product } from '~/types/interfaces'
+import { useI18n } from 'vue-i18n'
+
 definePageMeta({
   middleware: ['authenticated'],
 })
+
+const { t } = useI18n()
+
 const { getProducts } = useProducts()
 const { getOrders } = useOrders()
 
@@ -15,7 +21,8 @@ const type = ref<string[] | undefined>(['Monitor', 'Laptop'])
 const specification = ref<string[] | undefined>(['specification1', 'specification2'])
 
 const orderMap = new Map()
-onMounted(async () => {
+
+async function loadData() {
   loading.value = true
   try {
     products.value = await getProducts()
@@ -23,37 +30,25 @@ onMounted(async () => {
     orders.forEach((o) => {
       orderMap.set(o.id, o)
     })
+    filteredProducts.value = allProducts(products.value)
   } catch (e: any) {
-    error.value = e.message || 'Ошибка загрузки продуктов'
+    error.value = e.message || t('pages.products.error')
   } finally {
     loading.value = false
   }
-})
+}
 
 const allProducts = (p: Product[]) => {
   return p.map((e) => {
-    e.orderName = orderMap.get(e.order).title || ''
-    e.orderDate = orderMap.get(e.order).date || ''
+    e.orderName = orderMap.get(e.order)?.title || ''
+    e.orderDate = orderMap.get(e.order)?.date || ''
     return e
   })
 }
+
 const filteredProducts = ref<Product[]>([])
 
-onMounted(async () => {
-  loading.value = true
-  try {
-    products.value = await getProducts()
-    const orders = await getOrders()
-    orders.forEach((o) => {
-      orderMap.set(o.id, o)
-    })
-    filteredProducts.value = allProducts(products.value) // дефолт — все продукты
-  } catch (e: any) {
-    error.value = e.message || 'Ошибка загрузки продуктов'
-  } finally {
-    loading.value = false
-  }
-})
+onMounted(loadData)
 
 function applyFilters(filters: { type: string; specification: string }) {
   const all = allProducts(products.value)
@@ -69,13 +64,13 @@ function applyFilters(filters: { type: string; specification: string }) {
   <NuxtLayout>
     <div class="wrapper">
       <SubHeader
-        :title="MenuList.PRODUCTS"
+        :title="t(MenuList.PRODUCTS)"
         :max-items="products.length"
         :type="type"
         :specification="specification"
         @filter-changed="applyFilters"
       />
-      <div v-if="loading">Загрузка...</div>
+      <div v-if="loading">{{ t('pages.products.loading') }}</div>
       <div v-else-if="error" class="error">{{ error }}</div>
 
       <div v-else class="products-list-wrapper">

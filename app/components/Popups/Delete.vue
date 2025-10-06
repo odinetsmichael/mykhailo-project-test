@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import type { Product } from '~/types/interfaces'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 interface PopupDelete {
   visible: boolean
   title?: string
@@ -22,7 +26,10 @@ const confirm = () => emit('confirm')
   <div v-if="visible" class="popup-overlay" @click.self="close">
     <div class="popup-content" @click.stop>
       <button class="popup-close" @click="close">✕</button>
-      <h3 class="popup-title">{{ title }}</h3>
+
+      <h3 class="popup-title">
+        {{ title || t('components.popup.delete-title') }}
+      </h3>
 
       <div class="popup-body">
         <div class="product-popup" v-if="selectedProduct">
@@ -41,8 +48,12 @@ const confirm = () => emit('confirm')
       </div>
 
       <div class="popup-actions">
-        <button class="btn-cancel" @click="close">Отменить</button>
-        <button class="btn-delete" @click="confirm">Удалить</button>
+        <button class="btn-cancel" @click="close">
+          {{ t('components.popup.cancel-button') }}
+        </button>
+        <button class="btn-delete" @click="confirm">
+          {{ t('components.popup.delete-button') }}
+        </button>
       </div>
     </div>
   </div>
@@ -53,27 +64,34 @@ const confirm = () => emit('confirm')
   display: flex;
   align-items: center;
   gap: 4rem;
+
   .product-popup__status {
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
     flex-shrink: 0;
   }
+
   .free {
     background-color: $free-green;
   }
+
   .repair {
     background-color: $base-black-title;
   }
+
   .product-popup__image {
     @include list-image;
   }
+
   .product-popup__name {
     flex: 1;
     overflow: hidden;
+
     .product-popup__title {
       @include product-name;
     }
+
     .product-popup__serial {
       @include product-serial;
     }
@@ -88,6 +106,7 @@ const confirm = () => emit('confirm')
   justify-content: center;
   align-items: center;
   z-index: 50;
+
   .popup-content {
     background: #fff;
     border-radius: $default-br;
@@ -95,6 +114,7 @@ const confirm = () => emit('confirm')
     max-width: 90%;
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
     position: relative;
+
     .popup-close {
       position: absolute;
       z-index: 51;
@@ -109,9 +129,9 @@ const confirm = () => emit('confirm')
       font-size: 1.4rem;
       font-weight: bold;
       cursor: pointer;
-      -webkit-box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.3);
       box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.3);
     }
+
     .popup-title {
       margin: 0;
       padding: 2.2rem 2.8rem;
@@ -120,18 +140,21 @@ const confirm = () => emit('confirm')
       border-bottom: 0.1rem solid $border-grey;
       color: $base-black-title;
     }
+
     .popup-body {
       padding: 1rem 2.4rem;
       &:deep(.order-name) {
         @include order-name;
       }
     }
+
     .popup-actions {
       display: flex;
       justify-content: flex-end;
       gap: 1.4rem;
       padding: 2.2rem 2.8rem;
       background: $base-green;
+
       .btn-cancel {
         background: transparent;
         border: none;
@@ -141,6 +164,7 @@ const confirm = () => emit('confirm')
         width: 14rem;
         height: 4rem;
       }
+
       .btn-delete {
         background: white;
         color: $danger-color;

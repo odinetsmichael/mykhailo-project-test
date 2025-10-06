@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import { useRoute } from '#app'
+
 const { loggedIn, user, fetch: refreshSession } = useUserSession()
+const route = useRoute()
+
 const credentials = reactive({
   email: '',
   password: '',
 })
+
 async function login() {
   try {
     await $fetch('/api/login', {
@@ -11,7 +16,10 @@ async function login() {
       body: credentials,
     })
     await refreshSession()
-    await navigateTo('/')
+    await navigateTo({
+      path: '/',
+      query: { lang: route.query.lang || 'ru' },
+    })
   } catch {
     alert('Bad credentials')
   }

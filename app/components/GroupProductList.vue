@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Product } from '~/types/interfaces'
-
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 interface GroupProductList {
   orderName: string
   products: Product[]
@@ -15,7 +16,7 @@ const props = defineProps<GroupProductList>()
 
     <div class="group-products__add">
       <div class="group-products__add-icon">+</div>
-      <div class="group-products__add-text">Добавить продукт</div>
+      <div class="group-products__add-text">{{ t('components.groupProducts.addProduct') }}</div>
     </div>
 
     <div class="group-products__list">
@@ -26,17 +27,22 @@ const props = defineProps<GroupProductList>()
           <span class="group-products__name">{{ product.title }}</span>
           <div class="group-products__serial">SN-{{ product.serialNumber }}</div>
         </div>
-        <div class="group-products__status-word-free" v-if="product.status">Свободен</div>
-        <div class="group-products__status-word-repair" v-if="!product.status">В ремонте</div>
+        <div class="group-products__status-word-free" v-if="product.status">
+          {{ t('components.groupProducts.status.free') }}
+        </div>
+        <div class="group-products__status-word-repair" v-if="!product.status">
+          {{ t('components.groupProducts.status.repair') }}
+        </div>
         <div class="group-products__delete">
           <UiTrash @click="openDeletePopup(product)" />
         </div>
       </div>
     </div>
   </div>
+
   <PopupsDelete
     :visible="showPopup"
-    title="Вы уверены, что хотите удалить этот продукт?"
+    :title="t('components.groupProducts.deleteTitle')"
     :selected-product="selectedProduct"
     @close="closeDeletePopup"
   >

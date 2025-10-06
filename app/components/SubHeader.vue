@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import type { MenuList } from '~/types/enums'
-
 interface SubHeader {
-  title: MenuList
+  title: string
   maxItems?: number
   type?: string[]
   specification?: string[]
@@ -38,17 +36,17 @@ function updateFilters() {
       class="filters-wrapper"
     >
       <div class="filter">
-        <label class="filter-label">Тип:</label>
+        <label class="filter-label">{{ $t('components.sub-header.type-label') }}:</label>
         <select class="form-select" v-model="selectedType" @change="updateFilters">
-          <option value="">Все</option>
+          <option value="">{{ $t('components.sub-header.all-option') }}</option>
           <option :value="val" v-for="val in props.type" :key="val">{{ val }}</option>
         </select>
       </div>
 
       <div class="filter">
-        <label class="filter-label">Спецификация:</label>
+        <label class="filter-label">{{ $t('components.sub-header.specification-label') }}:</label>
         <select class="form-select" v-model="selectedSpecification" @change="updateFilters">
-          <option value="">Все</option>
+          <option value="">{{ $t('components.sub-header.all-option') }}</option>
           <option :value="val" v-for="val in props.specification" :key="val">{{ val }}</option>
         </select>
       </div>

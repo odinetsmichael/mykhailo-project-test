@@ -1,7 +1,32 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const props = defineProps({
+  modelValue: String,
+  placeholderKey: {
+    type: String,
+    default: 'components.search.placeholder', // дефолтный ключ
+  },
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const { t } = useI18n()
+
+function onInput(event: Event) {
+  emit('update:modelValue', (event.target as HTMLInputElement).value)
+}
+</script>
+
 <template>
   <div class="input">
-    <input type="text" class="input-item" placeholder="Поиск" />
+    <input
+      type="text"
+      class="input-item"
+      :placeholder="t(placeholderKey)"
+      :value="modelValue"
+      @input="onInput"
+    />
   </div>
 </template>
 
@@ -26,7 +51,7 @@
 
     &:focus {
       outline: none;
-      border-color: #5cb85c; // зелёный акцент (как в меню)
+      border-color: #5cb85c;
       box-shadow: 0 0 0 2px rgba(92, 184, 92, 0.6);
     }
   }

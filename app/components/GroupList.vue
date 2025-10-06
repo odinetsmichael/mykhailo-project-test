@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { getProductWord } from '~/utils/orders'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 interface GroupList {
   numOfProducts: number
@@ -26,7 +29,9 @@ const handleClick = () => {
 
       <div class="group-list__count">
         <span class="group-list__number">{{ numOfProducts }}</span>
-        <span class="group-list__label">{{ getProductWord(numOfProducts) }}</span>
+        <span class="group-list__label">
+          {{ getProductWord(numOfProducts, t('components.order-list.products-label')) }}</span
+        >
       </div>
 
       <div class="group-list__date">

@@ -1,32 +1,48 @@
 <script setup lang="ts">
-import { MONTH_NAMES } from '~/types/variables'
+import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useActiveUsers } from '~/composables/useActiveUsers'
+const { t, locale } = useI18n()
+
 const { activeUsers } = useActiveUsers()
 
-const now = new Date()
-const date = ref<string>('')
-const time = ref<string>('')
-const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
-const dayName = days[now.getDay()]
+const date = ref('')
+const time = ref('')
+const dayName = ref('')
+
 const updateDateTime = () => {
+  const now = new Date()
+
+  const dayIndex = now.getDay()
+  dayName.value = t(`components.days.${dayIndex}`)
   const day = String(now.getDate()).padStart(2, '0')
-  const month = MONTH_NAMES[now.getMonth()]
+  const monthIndex = now.getMonth()
+  const month = t(`components.months.${monthIndex}`)
   const year = now.getFullYear()
+
   const hours = String(now.getHours()).padStart(2, '0')
   const minutes = String(now.getMinutes()).padStart(2, '0')
-  time.value = `${hours}:${minutes}`
+
   date.value = `${day} ${month}, ${year}`
+  time.value = `${hours}:${minutes}`
 }
 
 onMounted(() => {
   updateDateTime()
+
   const now = new Date()
   const msUntilNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds()
+
   setTimeout(() => {
     updateDateTime()
     setInterval(updateDateTime, 60 * 1000)
   }, msUntilNextMinute)
 })
+watch(locale, () => {
+  updateDateTime()
+})
 </script>
+
 <template>
   <header class="header">
     <div class="container">

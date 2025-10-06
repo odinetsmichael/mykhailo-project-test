@@ -27,7 +27,7 @@ function formatGuaranteeDate(dateStr: string): string {
 </script>
 
 <template>
-  <UiStrokeWrapper v-for="product in products">
+  <UiStrokeWrapper v-for="product in products" :key="product.id">
     <div class="products-list">
       <div class="product-item__status" :class="product.status ? 'free' : 'repair'"></div>
       <img class="product-item__image" :src="product.photo" alt="product-photo" />
@@ -35,24 +35,39 @@ function formatGuaranteeDate(dateStr: string): string {
         <span class="product-item__title">{{ product.title }}</span>
         <div class="product-item__serial">SN-{{ product.serialNumber }}</div>
       </div>
-      <div class="product-item__status-word-free" v-if="product.status">Свободен</div>
-      <div class="product-item__status-word-repair" v-if="!product.status">В ремонте</div>
+
+      <div class="product-item__status-word-free" v-if="product.status">
+        {{ $t('components.products-list.status-free') }}
+      </div>
+      <div class="product-item__status-word-repair" v-if="!product.status">
+        {{ $t('components.products-list.status-repair') }}
+      </div>
+
       <div class="product-item__guarantee">
         <div class="product__guarantee-start">
-          <span>с </span>{{ formatGuaranteeDate(product.guarantee.start) }}
+          <span>{{ $t('components.products-list.guarantee-from') }}</span>
+          {{ formatGuaranteeDate(product.guarantee.start) }}
         </div>
         <div class="product__guarantee-end">
-          <span>по </span> {{ formatGuaranteeDate(product.guarantee.end) }}
+          <span>{{ $t('components.products-list.guarantee-to') }}</span>
+          {{ formatGuaranteeDate(product.guarantee.end) }}
         </div>
       </div>
+
       <div class="product-item__availability">
-        <span v-if="product.availability">Новый</span>
-        <span v-if="!product.availability">Б/У</span>
+        <span v-if="product.availability">
+          {{ $t('components.products-list.availability-new') }}
+        </span>
+        <span v-if="!product.availability">
+          {{ $t('components.products-list.availability-used') }}
+        </span>
       </div>
+
       <div class="product-item__cost">
         <span class="usd">{{ product.price[0]?.value }} $</span>
         <span class="uah">{{ product.price[1]?.value }} UAH</span>
       </div>
+
       <div class="product-item__group-name">
         <span class="text">Длинное предленное предленнючее название группы</span>
       </div>
@@ -77,9 +92,10 @@ function formatGuaranteeDate(dateStr: string): string {
       </div>
     </div>
   </UiStrokeWrapper>
+
   <PopupsDelete
     :visible="showPopup"
-    title="Вы уверены, что хотите удалить этот продукт?"
+    :title="$t('components.products-list.delete-title')"
     :selected-product="selectedProduct"
     @close="closeDeletePopup"
   >

@@ -2,7 +2,9 @@
 import { useProducts } from '~/composables/useProducts'
 import { MenuList } from '@/types/enums'
 import type { Product } from '~/types/interfaces'
-
+definePageMeta({
+  middleware: ['authenticated'],
+})
 const { getProducts } = useProducts()
 const { getOrders } = useOrders()
 

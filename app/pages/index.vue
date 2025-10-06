@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import { MenuList } from '@/types/enums'
 import { useOrders } from '~/composables/useOrders'
-
+definePageMeta({
+  middleware: ['authenticated'],
+})
 const { ordersWithCost, loading, error, getOrders } = useOrders()
 
 onMounted(() => {
   getOrders()
 })
+
+const { user, clear: clearSession } = useUserSession()
+
+async function logout() {
+  await clearSession()
+  await navigateTo('/login')
+}
 </script>
 
 <template>
@@ -25,6 +34,7 @@ onMounted(() => {
         :order-cost-usd="order.totalCostUSD"
       />
     </div>
+    <button @click="logout">Logout</button>
   </NuxtLayout>
 </template>
 

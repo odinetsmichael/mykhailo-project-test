@@ -1,4 +1,7 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: ['authenticated'],
+})
 import { MenuList } from '@/types/enums'
 import { useOrders } from '~/composables/useOrders'
 import type { Order } from '~/types/interfaces'

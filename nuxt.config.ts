@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     '@/assets/scss/base.scss',
     '@/assets/scss/media.scss',
   ],
-  modules: ['@nuxtjs/google-fonts'],
+  modules: ['@nuxtjs/google-fonts', 'nuxt-auth-utils'],
   googleFonts: {
     families: {
       Roboto: [300, 400, 500, 700],

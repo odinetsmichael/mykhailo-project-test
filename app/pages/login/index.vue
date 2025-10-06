@@ -10,6 +10,7 @@ const credentials = reactive({
 })
 
 async function login() {
+  console.log(credentials)
   try {
     await $fetch('/api/login', {
       method: 'POST',
@@ -20,14 +21,15 @@ async function login() {
       path: '/',
       query: { lang: route.query.lang || 'ru' },
     })
-  } catch {
+  } catch (e) {
+    console.log(e)
     alert('Bad credentials')
   }
 }
 </script>
 
 <template>
-  <form @submit.prevent="login" class="form-login">
+  <form @submit.prevent="login()" class="form-login">
     <div class="form-login__data">
       <p class="password__title">admin@admin.com</p>
       <p class="login__title">iamtheadmin</p>

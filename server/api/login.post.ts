@@ -6,14 +6,22 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
+  console.log('ApiLogin:', event)
+
   const { email, password } = await readValidatedBody(event, bodySchema.parse)
 
   if (email === 'admin@admin.com' && password === 'iamtheadmin') {
-    await setUserSession(event, {
-      user: {
-        name: 'John Doe',
+    await setUserSession(
+      event,
+      {
+        user: {
+          name: 'John Doe',
+        },
       },
-    })
+      {
+        password: 'a-random-password-with-at-least-32-characters',
+      }
+    )
     return {}
   }
   throw createError({

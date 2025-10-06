@@ -14,7 +14,9 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "bootstrap": "^5.3.8",
+    "jsonwebtoken": "^9.0.2",
     "nuxt": "^4.1.2",
     "nuxt-auth-utils": "^0.5.25",
     "socket.io": "^4.8.1",

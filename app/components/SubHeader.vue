@@ -3,7 +3,7 @@ import type { MenuList } from '~/types/enums'
 
 interface SubHeader {
   title: MenuList
-  maxItems: number
+  maxItems?: number
   type?: string[]
   specification?: string[]
 }
@@ -27,7 +27,9 @@ function updateFilters() {
 
 <template>
   <div class="sub-header">
-    <p>{{ props.title }} / {{ props.maxItems }}</p>
+    <p>
+      {{ props.title }} <span v-if="maxItems">/ {{ props.maxItems }}</span>
+    </p>
 
     <div
       v-if="

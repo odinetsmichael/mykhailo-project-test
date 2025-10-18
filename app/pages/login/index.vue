@@ -10,7 +10,6 @@ const credentials = reactive({
 })
 
 async function login() {
-  console.log(credentials)
   try {
     await $fetch('/api/login', {
       method: 'POST',
